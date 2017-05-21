@@ -1,0 +1,14 @@
+D:\Тарас\C#\2017\Diplom\Main\Main\bin\Debug\Main.exe.config
+D:\Тарас\C#\2017\Diplom\Main\Main\bin\Debug\Main.exe
+D:\Тарас\C#\2017\Diplom\Main\Main\bin\Debug\Main.pdb
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main.csprojResolveAssemblyReference.cache
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\MainWindow.baml
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\MainWindow.g.cs
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\App.g.cs
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main_MarkupCompile.cache
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main.g.resources
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main.Properties.Resources.resources
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main.csproj.GenerateResource.Cache
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main.exe
+D:\Тарас\C#\2017\Diplom\Main\Main\obj\Debug\Main.pdb
+D:\Тарас\C#\2017\Diplom\Main\Main\bin\Debug\LiteDB.dll
