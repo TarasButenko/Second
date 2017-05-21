@@ -35,16 +35,17 @@ namespace Main
             public string Text { get; set; }
         }
         private string mydocpath;
+        private string filePath;
         public MainWindow()
         {
             InitializeComponent();
             mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            string filePath = System.IO.Path.Combine(mydocpath, "text.txt");
-            if (!File.Exists(filePath))
+            string filePath = System.IO.Path.Combine(mydocpath, "Requests-Answers.db");
+           /* if (!File.Exists(filePath))
             {
                 File.Create(filePath);
             }
-           
+           */
         }
         private void ButtonStartClick(object sender, RoutedEventArgs e)
         {
@@ -69,23 +70,75 @@ namespace Main
         public string GetAnswer(string S)
         {
             string AnswerText;
-            int IdAnwser;
+            int IdAnswer;
+            bool Done=false;
             IEnumerable<string> RequestWords;
             RequestWords = GetWords(S);
-            using (var db = new LiteDatabase(@"Requests-Answers.db"))
+            filePath = System.IO.Path.Combine(mydocpath, "Requests-Answers.db");
+            using (var db = new LiteDatabase(filePath))
             {
                 var requests = db.GetCollection<Request>("requests");
                 var answers = db.GetCollection<Answer>("answers");
 
-                if (requests.EnsureIndex(x => x.Equals(S)))
+                if (requests.Find(x => x.Text.Equals(S)).Count() != 0)
                 {
                     var request = requests.Find(x => x.Text.Equals(S));
-                    IdAnwser = request.ElementAt(0).AnwserId;
-                    AnswerText = ((answers.Find(x => x.Equals(IdAnwser))).ElementAt(0)).Text;
+                    IdAnswer = request.ElementAt(0).AnwserId;
+                    if (IdAnswer != -1)
+                    {
+                        AnswerText = ((answers.Find(x => x.Equals(IdAnswer))).ElementAt(0)).Text;
+                        Done = true;
+                    }
+                    else 
+                    {
+                        AnswerText = "Вопрос в очереди на рассмотрение";
+                    }
+                    
                 }
                 else
                 {
-                    AnswerText = "Ответ не найден";
+                    int[] Ar = new int[requests.FindAll().Count()];
+                    int i = 0;
+
+                    for (i = 0; i < requests.FindAll().Count();i++ )
+                    {
+                        Ar[i] = 0;
+                    }
+                    i = 0;
+                    int wordsCount = RequestWords.Count();
+                    foreach (var req in requests.FindAll())
+                    {
+                        foreach (string word in RequestWords)
+                        { 
+                            foreach(string wor in req.Words)
+                            {
+                                if (word.Equals(wor))
+                                {
+                                    Ar[i] += 1;
+                                }
+                            }
+                        }
+                            i++;
+                    }
+                    int Max=0, Maxi=-1;
+                    for (i = 0; i < requests.FindAll().Count(); i++)
+                    {
+                        if (Ar[i] > 0)
+                        {
+                            Maxi = i; Max = Ar[i];
+                        }
+                    }
+                    if (Max == 0)
+                    {
+                        AnswerText = "Ответ не найден";
+                        var request = new Request { AnwserId = -1, Text = S, Words = RequestWords };
+                        requests.Insert(request);
+                    }
+                    else
+                    {
+                        IdAnswer = requests.FindById(Maxi).AnwserId;
+                        AnswerText = answers.FindById(IdAnswer).Text;
+                    }
                 }
             }
             return AnswerText;
