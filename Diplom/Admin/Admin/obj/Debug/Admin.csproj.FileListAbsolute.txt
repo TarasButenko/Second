@@ -12,3 +12,16 @@ D:\Тарас\C#\2017\Diplom\Admin\Admin\obj\Debug\Admin.exe
 D:\Тарас\C#\2017\Diplom\Admin\Admin\obj\Debug\Admin.pdb
 D:\Тарас\C#\2017\Diplom\Admin\Admin\bin\Debug\LiteDB.dll
 D:\Тарас\C#\2017\Diplom\Admin\Admin\obj\Debug\Admin.csprojResolveAssemblyReference.cache
+G:\Тарас\Diplom\Admin\Admin\bin\Debug\Admin.exe.config
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin.exe
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin.pdb
+G:\Тарас\Diplom\Admin\Admin\bin\Debug\Admin.exe
+G:\Тарас\Diplom\Admin\Admin\bin\Debug\Admin.pdb
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin.csprojResolveAssemblyReference.cache
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\MainWindow.baml
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\MainWindow.g.cs
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\App.g.cs
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin_MarkupCompile.cache
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin.g.resources
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin.Properties.Resources.resources
+G:\Тарас\Diplom\Admin\Admin\obj\Debug\Admin.csproj.GenerateResource.Cache

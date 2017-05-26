@@ -16,8 +16,8 @@
         <TextBox  Grid.Row="1" Grid.Column="1"  Name="TextBoxRequest" Height="30" Width="350"/>
         <TextBox  Grid.Row="1" Grid.Column="2"  Name="TextBoxAnswer" Height="30" Width="30"/>
         <TextBlock Grid.Row="0" Grid.Column="1" Name="TextBlockReq" Text="" Height="100" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Name="TextBlockInf" Text="" Height="100" Margin="0,3,92,3" />
-        <TextBlock Grid.Row="1" Grid.Column="0" Name="TextBlockInf2" Text="" Height="100" Margin="80,3,0,3" />
+        <ListBox Grid.Row="1" Grid.Column="0" Name="ListBoxInf"  Height="100"  />
+        <!--<ListBox Grid.Row="1" Grid.Column="0" Name="ListBoxInf2"  Height="100" Margin="80,3,0,3" />-->
         <Button  Grid.Row="2"  Grid.Column="0" Width="100" Height="50" Content="Next"  Click="ButtonStartClick"/>
         <Button  Grid.Row="0" Grid.Column="2" Width="100" Height="50" Content="Delete"  Click="ButtonDeleteClick"/>
         <Button  Grid.Row="2" Grid.Column="1" Content="Create new" Width="100" Height="50" Click="ButtonReqClick"/>

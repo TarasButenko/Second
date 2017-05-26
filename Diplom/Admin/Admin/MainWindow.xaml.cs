@@ -11,9 +11,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Admin
@@ -59,10 +57,10 @@ namespace Admin
         {
             InitializeComponent();
             index -= 1;
-            Application.Current.MainWindow.WindowState = WindowState.Maximized;
+             Application.Current.MainWindow.WindowState = WindowState.Maximized;
             mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             filePath = System.IO.Path.Combine(mydocpath, "Requests-Answers.db");
-        }
+            }
         private void ButtonStartClick(object sender, RoutedEventArgs e)
         {
             int count = 0;
@@ -114,8 +112,10 @@ namespace Admin
             using (var db = new LiteDatabase(filePath))
             {
                 var requests = db.GetCollection<Request>("requests");
-                var req = request;
-                TextBlockInf.Text = req.Id + " " + GetWords(req.Text).ElementAt(0) + " " + req.Text + "";
+                Request req = new Request{Text=request.Text, Words=request.Words};
+                req.AnwserId =Convert.ToInt32(TextBoxAnswer.Text);
+                requests.Insert(req);
+                TextBlockReq.Text = "Вопрос сохранен";
             }                
         }
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
@@ -140,17 +140,16 @@ namespace Admin
             RefreshIdDB();
             using (var db = new LiteDatabase(filePath))
             {
+                ListBoxInf.Items.Clear();
                 var answers = db.GetCollection<Answer>("answers");
-                TextBlockInf.Text = "";
-                TextBlockInf2.Text = "";
                 foreach (var ans in answers.Find(x => x.Id >= 0))
                 {
-                    TextBlockInf.Text+= "# "+ ans.Id +" - "+ans.Text +"\n";
+                    ListBoxInf.Items.Add("# "+ ans.Id +" - "+ans.Text );
                 }
                 var requests = db.GetCollection<Request>("requests");
                 foreach (var req in requests.Find(x => x.Id >= 0))
                 {
-                    TextBlockInf2.Text += "№ " + req.Id + " - " + req.Text + "\n";
+                    ListBoxInf.Items.Add("№ " + req.Id + " - " + req.Text);
                 }
                 
             }

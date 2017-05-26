@@ -8,11 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Main
@@ -31,8 +27,10 @@ namespace Main
             public IEnumerable<string> GetWords()
             {
                 string space = @" ";
-
+                Text = Text.ToLower();
+                Text.Trim(new Char[] { ' ', '*', '.', ',', '?', '&', '!' });
                 string[] S = Regex.Split(Text, space);
+                S = S.Distinct().ToArray();
                 this.Words = S.Where(x => !string.IsNullOrWhiteSpace(x));
                 /*foreach (string element in StrArray)
                 {
@@ -53,20 +51,48 @@ namespace Main
         static private int[] WordsCount = { 0, 1, 2, 3, 3, 4, 5, 6, 6, 7, 8 };
         private string mydocpath;
         private string filePath;
+        private string filePath2;
+        DateTime localDate;
+        CultureInfo culture;
         public MainWindow()
         {
             InitializeComponent();
             mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
              filePath = System.IO.Path.Combine(mydocpath, "Requests-Answers.db");
-           /* if (!File.Exists(filePath))
+             localDate = DateTime.Now;
+              culture = new CultureInfo("uk-UA");
+              ListBoxJournal.Items.Add("Журнал запитаннь та відповідей Дата:" + localDate.ToString(culture));
+            /* if (!File.Exists(filePath))
             {
                 File.Create(filePath);
             }
            */
         }
+        private void ButtonSaveClick(object sender, RoutedEventArgs e)
+        {
+            string text = "";
+
+
+
+            mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            filePath2 = System.IO.Path.Combine(mydocpath, localDate.ToString(culture));
+            foreach (string txt in ListBoxJournal.Items)
+                text += txt;
+            filePath2 = filePath2.Replace(" ", "");
+            filePath2 = filePath2.Replace(":", "");
+            filePath2 = filePath2.Replace(".", "");
+            if (!File.Exists(filePath2))
+            {
+                //File.Create(filePath2 + ".txt");
+            }
+            
+            //System.IO.File.WriteAllText(filePath2+".txt", text);
+
+        }
         private void ButtonStartClick(object sender, RoutedEventArgs e)
         {
            TextBlockAnswer.Text= GetAnswer(TextBoxRequest.Text );
+           ListBoxJournal.Items.Add("Запрос:" + TextBoxRequest.Text + " - " + TextBlockAnswer.Text);
         }
         private IEnumerable<string> GetWords(string input)
         {
@@ -103,12 +129,12 @@ namespace Main
                     IdAnswer = request.ElementAt(0).AnwserId;
                     if (IdAnswer != -1)
                     {
-                        AnswerText = ((answers.Find(x => x.Equals(IdAnswer))).ElementAt(0)).Text;
+                        AnswerText = "Ваш ответ :"+((answers.Find(x => x.Id == IdAnswer)).ElementAt(0)).Text;
                         Done = true;
                     }
                     else 
                     {
-                        AnswerText = "Вопрос в очереди на рассмотрение";
+                        AnswerText = "Вопрос в очереди на рассмотрение экспертом";
                     }
                     
                 }
@@ -161,11 +187,19 @@ namespace Main
                         {
                             if (Max == wordsCount)
                             {
-                                AnswerText = answers.FindById(IdAnswer).Text;
+                                AnswerText ="Ваш ответ :"+ answers.FindById(IdAnswer).Text;
                             }
                             else
                             {
-                                AnswerText ="Возможно вы имелли ввиду"+ answers.FindById(IdAnswer).Text;
+                                if (MessageBox.Show("Возможно вы имелли ввиду" + answers.FindById(IdAnswer).Text, "Question",
+               MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+                                { 
+                                    AnswerText = "Ваш ответ :"+ answers.FindById(IdAnswer).Text;
+                                }
+                                else
+                                {
+                                    AnswerText = "Ответ на ваш вопрос мне не известен, я спрошу у Эксперта";
+                                }
                             }
                         }
                     }
