@@ -11,8 +11,8 @@
         </Grid.RowDefinitions>
         <TextBox  Grid.Row="0" Name="TextBoxRequest" Height="30" Width="350"/>
         <TextBlock Grid.Row="1" Name="TextBlockAnswer" Text=""  />
-        <Button  Grid.Row="2" Width="95" Content="Ask" Height="45" Click="ButtonStartClick"/>
-        <Button  Grid.Row="2" Width="95" Content="SaveJournal" Height="45" Click="ButtonSaveClick" Margin="334,15,83,15"/>
+        <Button  Grid.Row="2" Width="95" Content="Запитати" Height="45" Click="ButtonStartClick"/>
+        <Button  Grid.Row="2" Content="Зберегти журнал" Click="ButtonSaveClick" Margin="336,18,59,18"/>
         <ListBox Grid.Row="3" Name="ListBoxJournal"  />
 
     </Grid>

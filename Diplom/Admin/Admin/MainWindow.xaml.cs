@@ -82,13 +82,17 @@ namespace Admin
                 }
                 if(count==0)
                 {
-                    TextBlockReq.Text="Активных вопросов нет";
+                    TextBlockReq.Text="Питань для тьютора немає";
                 }
             }
         }
         private void ButtonReqClick(object sender, RoutedEventArgs e)
         {
-             using (var db = new LiteDatabase(filePath))
+            if (TextBoxRequest.Text != "")
+            {
+                if (TextBoxRequest.Text.Trim(new Char[] { ' ', '*', '.', ',', '?', '&', '!' }) != "")
+                {
+                    using (var db = new LiteDatabase(filePath))
             {
                 var requests = db.GetCollection<Request>("requests");
                 var answers = db.GetCollection<Answer>("answers");
@@ -102,21 +106,45 @@ namespace Admin
                         req.AnwserId = idanswer;
                         requests.Update(req);
                         index = -1;
-                        TextBlockReq.Text = "Ответ сохранен";
+                        TextBlockReq.Text = "Відповідь збережена";
                     }
                 }
-            }  
+            }
+                }
+                else
+                {
+                    TextBoxRequest.Text = "Ви ввели некоректний рядок";
+                }
+            }
+            else
+            {
+                TextBoxRequest.Text = "Ви не ввели відповідь";
+            }
         }
         private void ButtonAnsClick(object sender, RoutedEventArgs e)
         {
+            if (TextBoxAnswer.Text != "")
+            {
+                if (TextBoxAnswer.Text.Trim(new Char[] { ' ', '*', '.', ',', '?', '&', '!' }) != "")
+                {
             using (var db = new LiteDatabase(filePath))
             {
                 var requests = db.GetCollection<Request>("requests");
                 Request req = new Request{Text=request.Text, Words=request.Words};
                 req.AnwserId =Convert.ToInt32(TextBoxAnswer.Text);
                 requests.Insert(req);
-                TextBlockReq.Text = "Вопрос сохранен";
-            }                
+                TextBlockReq.Text = "Запитання збережено";
+            }
+                }
+                else
+                {
+                    TextBlockReq.Text = "Ви ввели некоректне значення";
+                }
+            }
+             else
+             {
+                 TextBlockReq.Text = "Ви не ввели номер відповіді";
+             }
         }
         private void ButtonDeleteClick(object sender, RoutedEventArgs e)
         {
@@ -130,7 +158,7 @@ namespace Admin
                     {
                         requests.Delete(index);
                         index = -1;
-                        TextBlockReq.Text = "Удалено";
+                        TextBlockReq.Text = "Видалено";
                     }
                 }
             }

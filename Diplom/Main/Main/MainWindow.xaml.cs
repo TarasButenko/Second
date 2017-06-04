@@ -57,6 +57,8 @@ namespace Main
         public MainWindow()
         {
             InitializeComponent();
+         //   MessageBox.Show("Вам підходить відповідь: " + "Реферат робити потрібно", "Question",
+          //     MessageBoxButton.YesNo, MessageBoxImage.Warning) ;
             mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
              filePath = System.IO.Path.Combine(mydocpath, "Requests-Answers.db");
              localDate = DateTime.Now;
@@ -73,26 +75,43 @@ namespace Main
             string text = "";
 
 
-
+            string s = localDate.ToString(culture);
+            s = s.Replace(" ", "");
+            s = s.Replace(":", "");
+            s = s.Replace(".", "");
             mydocpath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-            filePath2 = System.IO.Path.Combine(mydocpath, localDate.ToString(culture));
+            filePath2 = System.IO.Path.Combine(mydocpath, s);
             foreach (string txt in ListBoxJournal.Items)
                 text += txt;
-            filePath2 = filePath2.Replace(" ", "");
-            filePath2 = filePath2.Replace(":", "");
-            filePath2 = filePath2.Replace(".", "");
+           
             if (!File.Exists(filePath2))
             {
-                //File.Create(filePath2 + ".txt");
+              //  File.Create(filePath2 + ".txt");
             }
             
-            //System.IO.File.WriteAllText(filePath2+".txt", text);
+            System.IO.File.WriteAllText(filePath2+".txt", text);
 
         }
         private void ButtonStartClick(object sender, RoutedEventArgs e)
         {
-           TextBlockAnswer.Text= GetAnswer(TextBoxRequest.Text );
-           ListBoxJournal.Items.Add("Запрос:" + TextBoxRequest.Text + " - " + TextBlockAnswer.Text);
+           
+            if (TextBoxRequest.Text != "")
+            {
+                if (TextBoxRequest.Text.Trim(new Char[] { ' ', '*', '.', ',', '?', '&', '!' }) != "")
+                {
+                    TextBlockAnswer.Text = GetAnswer(TextBoxRequest.Text);
+                    ListBoxJournal.Items.Add("Запитання:" + TextBoxRequest.Text + " - " + TextBlockAnswer.Text);
+                }
+                else
+                {
+                    TextBoxRequest.Text = "Ви ввели некоректний рядок";
+                }
+            }
+            else 
+            {
+                TextBoxRequest.Text = "Ви не ввели запитання";
+            }
+           // TextBoxRequest.Text = "Ви ввели більше 10 слів";
         }
         private IEnumerable<string> GetWords(string input)
         {
@@ -129,12 +148,12 @@ namespace Main
                     IdAnswer = request.ElementAt(0).AnwserId;
                     if (IdAnswer != -1)
                     {
-                        AnswerText = "Ваш ответ :"+((answers.Find(x => x.Id == IdAnswer)).ElementAt(0)).Text;
+                        AnswerText = "Відповідь :"+((answers.Find(x => x.Id == IdAnswer)).ElementAt(0)).Text;
                         Done = true;
                     }
                     else 
                     {
-                        AnswerText = "Вопрос в очереди на рассмотрение экспертом";
+                        AnswerText = "Питання в черзі на розгляд експертом";
                     }
                     
                 }
@@ -177,7 +196,7 @@ namespace Main
                            IdAnswer = requests.FindById(Maxi + 1).AnwserId;
                         if (IdAnswer < 0)
                         {
-                            AnswerText = "Ответ не найден";
+                            AnswerText = "Відповідь не знайденна, запитання відправлено тьютору";
                             //MessageBox.Show(RequestWords.ElementAt(0) + RequestWords.ElementAt(1));
                             var request = new Request { AnwserId = -1, Text = S, Words = RequestWords };
                             requests.Insert(request);
@@ -187,25 +206,25 @@ namespace Main
                         {
                             if (Max == wordsCount)
                             {
-                                AnswerText ="Ваш ответ :"+ answers.FindById(IdAnswer).Text;
+                                AnswerText ="Відповідь: "+ answers.FindById(IdAnswer).Text;
                             }
                             else
                             {
-                                if (MessageBox.Show("Возможно вы имелли ввиду" + answers.FindById(IdAnswer).Text, "Question",
+                                if (MessageBox.Show("Вам підходить відповідь: " + answers.FindById(IdAnswer).Text, "Question",
                MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
                                 { 
-                                    AnswerText = "Ваш ответ :"+ answers.FindById(IdAnswer).Text;
+                                    AnswerText = "Відповідь: "+ answers.FindById(IdAnswer).Text;
                                 }
                                 else
                                 {
-                                    AnswerText = "Ответ на ваш вопрос мне не известен, я спрошу у Эксперта";
+                                    AnswerText = "Відповідь не знайденна, запитання відправлено тьютору";
                                 }
                             }
                         }
                     }
                     else
                     {
-                        AnswerText = "Ответ не найден";
+                        AnswerText = "Відповідь не знайденна, запитання відправлено тьютору";
                         //MessageBox.Show(RequestWords.ElementAt(0) + RequestWords.ElementAt(1));
                         var request = new Request { AnwserId = -1, Text = S, Words = RequestWords };
                         requests.Insert(request);

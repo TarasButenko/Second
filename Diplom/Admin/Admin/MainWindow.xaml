@@ -18,11 +18,11 @@
         <TextBlock Grid.Row="0" Grid.Column="1" Name="TextBlockReq" Text="" Height="100" />
         <ListBox Grid.Row="1" Grid.Column="0" Name="ListBoxInf"  Height="100"  />
         <!--<ListBox Grid.Row="1" Grid.Column="0" Name="ListBoxInf2"  Height="100" Margin="80,3,0,3" />-->
-        <Button  Grid.Row="2"  Grid.Column="0" Width="100" Height="50" Content="Next"  Click="ButtonStartClick"/>
-        <Button  Grid.Row="0" Grid.Column="2" Width="100" Height="50" Content="Delete"  Click="ButtonDeleteClick"/>
-        <Button  Grid.Row="2" Grid.Column="1" Content="Create new" Width="100" Height="50" Click="ButtonReqClick"/>
-        <Button  Grid.Row="2" Grid.Column="2" Content="Add" Width="100" Height="50" Click="ButtonAnsClick"/>
-        <Button  Grid.Row="0" Grid.Column="0" Content="ShowAnswer" Width="100" Height="50" Click="ButtonAnsShowClick"/>
+        <Button  Grid.Row="2"  Grid.Column="0" Width="100" Height="50" Content="Наступне"  Click="ButtonStartClick"/>
+        <Button  Grid.Row="0" Grid.Column="2" Width="100" Height="50" Content="Видалити"  Click="ButtonDeleteClick"/>
+        <Button  Grid.Row="2" Grid.Column="1" Content="Зберегти" Width="100" Height="50" Click="ButtonReqClick"/>
+        <Button  Grid.Row="2" Grid.Column="2" Content="Додати" Width="100" Height="50" Click="ButtonAnsClick"/>
+        <Button  Grid.Row="0" Grid.Column="0" Content="Показати БД" Width="100" Height="50" Click="ButtonAnsShowClick"/>
 
     </Grid>
 </Window>
